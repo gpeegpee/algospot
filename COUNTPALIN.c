@@ -31,11 +31,15 @@ int get_result(int length)
 	int num_char = 0;
 	int j = 0;
 
+	int even_count = 0;
+	int odd_count = 0;
+
 	// 2
 	for (j = 0; j < length - 1; j++) {
 		if (msg[j] == msg[j + 1]) {
 			palindrome1[j] = 1;
 			result++;
+			even_count++;
 		}
 		else {
 			palindrome1[j] = 0;
@@ -47,6 +51,7 @@ int get_result(int length)
 		if (msg[j] == msg[j + 2]) {
 			palindrome2[j] = 1;
 			result++;
+			odd_count++;
 		}
 		else {
 			palindrome2[j] = 0;
@@ -56,6 +61,14 @@ int get_result(int length)
 	// from 4
 
 	for (num_char = 4; num_char < length; num_char++) {
+		if (even_count == 0 && odd_count == 0) {
+			break;
+		}
+		else {
+			even_count = 0;
+			odd_count = 0;
+		}
+
 		for (j = 0; j < length - num_char + 1; j++) {
 			if (num_char % 2 == 0) {
 				if (palindrome1[j + 1] == 0) {
@@ -64,6 +77,7 @@ int get_result(int length)
 				else if (msg[j] == msg[j + num_char - 1]) {
 					palindrome1[j] = 1;
 					result++;
+					even_count++;
 				}
 				else {
 					palindrome1[j] = 0;
@@ -76,6 +90,7 @@ int get_result(int length)
 				else if (msg[j] == msg[j + num_char - 1]) {
 					palindrome2[j] = 1;
 					result++;
+					odd_count++;
 				}
 				else {
 					palindrome2[j] = 0;
@@ -84,7 +99,7 @@ int get_result(int length)
 		}
 	}
 
-	return 0;
+	return result;
 }
 
 int main()
