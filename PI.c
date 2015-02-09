@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define debug printf
+
 #define MAX_LEN (10000)
 #define THREE_WORDS (3)
 #define FOUR_WORDS (4)
@@ -17,15 +19,10 @@ int length = 0;
 
 int get_level(int index, int words)
 {
-	if (length < (index + words + 2)) {
+	debug("index %d word %d\n", index, words);
+	if (length < (index + words)) {
 		return INF;
 	}
-
-	/*
-	if (level[index][words] != 0) {
-	return level[index][words];
-	}
-	*/
 
 	if (words == THREE_WORDS) {
 		if (pi[index] == pi[index + 1] && pi[index] == pi[index + 2]) {
@@ -113,30 +110,32 @@ int get_level(int index, int words)
 int get_min_level(int index)
 {
 	if (cache[index] != 0) {
+		debug("return cache[%d] %d\n", index, cache[index]);
 		return cache[index];
 	}
 
 	if (index >= length) {
-		return INF;
+		debug("EOF\n", index);
+		return 0;
 	}
 
 	int ret = INF;
 	int L = 0;
-	for (L = 3; L <= 5; L++) {
-		if (index + L >= length) {
-			return INF;
+	for(L = 3; L <= 5; L++) {
+		if (index + L > length) {
+			debug("L(%d) index(%d) ret(%d)\n", L, index, ret);
+			break;
 		}
 		ret = MIN(ret, get_level(index, L) + get_min_level(index + L));
+		debug("min %d\n", ret);
 	}
 	cache[index] = ret;
-
 	return ret;
 }
 
 void init()
 {
 	memset(&pi[0], 0x00, sizeof(pi));
-	//memset(&level[0][0], 0x00, sizeof(level));
 	memset(&cache[0], 0x00, sizeof(cache));
 	length = 0;
 }
@@ -145,7 +144,6 @@ int main()
 {
 	int test_case = 0;
 	int i = 0;
-	int length = 0;
 	int answer = 0;
 
 	scanf("%d", &test_case);
