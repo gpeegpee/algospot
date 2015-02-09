@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define debug 
+#define debug
 
 #define MAX_LEN (10000)
 #define THREE_WORDS (3)
@@ -21,7 +21,7 @@ int get_level(int index, int words)
 {
 	debug("index %d word %d\n", index, words);
 	if (length < (index + words)) {
-		return INF;
+		return 0;
 	}
 
 	if (words == THREE_WORDS) {
@@ -29,11 +29,11 @@ int get_level(int index, int words)
 			//level[index][words] = 1;
 			return 1;
 		}
-		else if (pi[index] + 1 == pi[index + 1] && pi[index] + 2 == pi[index + 2]) {
+		else if ((pi[index] + 1) == pi[index + 1] && (pi[index] + 2) == pi[index + 2]) {
 			//level[index][words] = 2;
 			return 2;
 		}
-		else if (pi[index] - 1 == pi[index + 1] && pi[index] - 2 == pi[index + 2]) {
+		else if ((pi[index] - 1) == pi[index + 1] && (pi[index] - 2) == pi[index + 2]) {
 			//level[index][words] = 2;
 			return 2;
 		}
@@ -55,11 +55,11 @@ int get_level(int index, int words)
 			//level[index][words] = 1;
 			return 1;
 		}
-		else if (pi[index] + 1 == pi[index + 1] && pi[index] + 2 == pi[index + 2] && pi[index] + 3 == pi[index + 3]) {
+		else if ((pi[index] + 1) == pi[index + 1] && (pi[index] + 2) == pi[index + 2] && (pi[index] + 3) == pi[index + 3]) {
 			//level[index][words] = 2;
 			return 2;
 		}
-		else if (pi[index] - 1 == pi[index + 1] && pi[index] - 2 == pi[index + 2] && pi[index] - 3 == pi[index + 3]) {
+		else if ((pi[index] - 1) == pi[index + 1] && (pi[index] - 2) == pi[index + 2] && (pi[index] - 3) == pi[index + 3]) {
 			//level[index][words] = 2;
 			return 2;
 		}
@@ -82,11 +82,11 @@ int get_level(int index, int words)
 			//level[index][words] = 1;
 			return 1;
 		}
-		else if (pi[index] + 1 == pi[index + 1] && pi[index] + 2 == pi[index + 2] && pi[index] + 3 == pi[index + 3] && pi[index] + 4 == pi[index + 4]) {
+		else if ((pi[index] + 1) == pi[index + 1] && (pi[index] + 2) == pi[index + 2] && (pi[index] + 3) == pi[index + 3] && (pi[index] + 4) == pi[index + 4]) {
 			//level[index][words] = 2;
 			return 2;
 		}
-		else if (pi[index] - 1 == pi[index + 1] && pi[index] - 2 == pi[index + 2] && pi[index] - 3 == pi[index + 3] && pi[index] - 4 == pi[index + 4]) {
+		else if ((pi[index] - 1) == pi[index + 1] && (pi[index] - 2) == pi[index + 2] && (pi[index] - 3) == pi[index + 3] && (pi[index] - 4) == pi[index + 4]) {
 			//level[index][words] = 2;
 			return 2;
 		}
