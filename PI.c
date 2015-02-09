@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define debug printf
+#define debug 
 
 #define MAX_LEN (10000)
 #define THREE_WORDS (3)
