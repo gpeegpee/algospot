@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define debug
+#define debug 
 
 #define MAX_LEN (10000)
 #define THREE_WORDS (3)
@@ -12,12 +12,74 @@
 #define INF (1000)
 
 char pi[MAX_LEN + 1] = { 0, };
-//int level[MAX_LEN][3] = { 0, };
-
 int cache[MAX_LEN] = { 0, };
 int length = 0;
 
-int get_level(int index, int words)
+int get_level(int index, int size)
+{
+	if (length < (index + size)) {
+		return 0;
+	}
+
+	char temp[6] = { pi[index], };
+
+	if (strncmp(&pi[index], temp, size) == 0) {
+		debug("return 1\n");
+		return 1;
+	}
+	else {
+		int i = 0;
+		for (i = 0; i < size - 1; i++) {
+			if (pi[index + i] - pi[index + i + 1] == 1) {
+				if (i == size - 2) {
+					debug("return 2\n");
+					return 2;
+				}
+				continue;
+			}
+			break;
+		}
+
+		for (i = 0; i < size - 1; i++) {
+			if (pi[index + i] - pi[index + i + 1] == -1) {
+				if (i == size - 2) {
+					debug("return 2\n");
+					return 2;
+				}
+				continue;
+			}
+			break;
+		}
+
+		for (i = 0; i < size; i++) {
+			if (pi[index + (i % 2)] = pi[index + i]) {
+				if (i == size - 1) {
+					debug("return 4\n");
+					return 4;
+				}
+				continue;
+			}
+			break;
+		}
+
+		int diff = pi[index] - pi[index + 1];
+		for (i = 0; i < size - 1; i++) {
+			if ((pi[index + i] - pi[index + i + 1]) == diff) {
+				if (i == size - 2) {
+					debug("return 5\n");
+					return 5;
+				}
+				continue;
+			}
+			break;
+		}
+
+		debug("return 10\n");
+		return 10;
+	}
+}
+
+int get_level2(int index, int words)
 {
 	debug("index %d word %d\n", index, words);
 	if (length < (index + words)) {
@@ -26,82 +88,64 @@ int get_level(int index, int words)
 
 	if (words == THREE_WORDS) {
 		if (pi[index] == pi[index + 1] && pi[index] == pi[index + 2]) {
-			//level[index][words] = 1;
 			return 1;
 		}
 		else if ((pi[index] + 1) == pi[index + 1] && (pi[index] + 2) == pi[index + 2]) {
-			//level[index][words] = 2;
 			return 2;
 		}
 		else if ((pi[index] - 1) == pi[index + 1] && (pi[index] - 2) == pi[index + 2]) {
-			//level[index][words] = 2;
 			return 2;
 		}
 		else if (pi[index] == pi[index + 2]) { // zigzag
-			//level[index][words] = 4;
 			return 4;
 		}
 		else if ((pi[index] - pi[index + 1]) == (pi[index + 1] - pi[index + 2])) {
-			//level[index][words] = 5;
 			return 5;
 		}
 		else {
-			//level[index][words] = 10;
 			return 10;
 		}
 	}
 	else if (words == FOUR_WORDS) {
-		if (pi[index] == pi[index + 1] && pi[index] == pi[index + 2] && pi[index] == pi[index + 3]) {
-			//level[index][words] = 1;
+		if ((pi[index] == pi[index + 1]) && (pi[index] == pi[index + 2]) && (pi[index] == pi[index + 3])) {
 			return 1;
 		}
 		else if ((pi[index] + 1) == pi[index + 1] && (pi[index] + 2) == pi[index + 2] && (pi[index] + 3) == pi[index + 3]) {
-			//level[index][words] = 2;
 			return 2;
 		}
 		else if ((pi[index] - 1) == pi[index + 1] && (pi[index] - 2) == pi[index + 2] && (pi[index] - 3) == pi[index + 3]) {
-			//level[index][words] = 2;
 			return 2;
 		}
 		else if (pi[index] == pi[index + 2] && pi[index + 1] == pi[index + 3]) { // zigzag
-			//level[index][words] = 4;
 			return 4;
 		}
 		else if ((pi[index] - pi[index + 1]) == (pi[index + 1] - pi[index + 2]) &&
 			(pi[index + 1] - pi[index + 2]) == (pi[index + 2] - pi[index + 3])) {
-			//level[index][words] = 5;
 			return 5;
 		}
 		else {
-			//level[index][words] = 10;
 			return 10;
 		}
 	}
 	else {
 		if (pi[index] == pi[index + 1] && pi[index] == pi[index + 2] && pi[index] == pi[index + 3] && pi[index] == pi[index + 4]) {
-			//level[index][words] = 1;
 			return 1;
 		}
 		else if ((pi[index] + 1) == pi[index + 1] && (pi[index] + 2) == pi[index + 2] && (pi[index] + 3) == pi[index + 3] && (pi[index] + 4) == pi[index + 4]) {
-			//level[index][words] = 2;
 			return 2;
 		}
 		else if ((pi[index] - 1) == pi[index + 1] && (pi[index] - 2) == pi[index + 2] && (pi[index] - 3) == pi[index + 3] && (pi[index] - 4) == pi[index + 4]) {
-			//level[index][words] = 2;
 			return 2;
 		}
 		else if (pi[index + 1] == pi[index + 3] && pi[index] == pi[index + 2] && pi[index] == pi[index + 4]) { // zigzag
-			//level[index][words] = 4;
 			return 4;
 		}
 		else if ((pi[index] - pi[index + 1]) == (pi[index + 1] - pi[index + 2]) &&
 			(pi[index + 1] - pi[index + 2]) == (pi[index + 2] - pi[index + 3]) &&
 			(pi[index + 2] - pi[index + 3]) == (pi[index + 3] - pi[index + 4])) {
-			//level[index][words] = 5;
 			return 5;
 		}
 		else {
-			//level[index][words] = 10;
 			return 10;
 		}
 	}
@@ -121,12 +165,16 @@ int get_min_level(int index)
 
 	int ret = INF;
 	int L = 0;
+	int result = 0;
 	for(L = 3; L <= 5; L++) {
 		if (index + L > length) {
 			debug("L(%d) index(%d) ret(%d)\n", L, index, ret);
 			break;
 		}
-		ret = MIN(ret, get_level(index, L) + get_min_level(index + L));
+
+		result = get_level(index, L);
+		debug("get_level %d\n", result);
+		ret = MIN(ret, result + get_min_level(index + L));
 		debug("min %d\n", ret);
 	}
 	cache[index] = ret;
