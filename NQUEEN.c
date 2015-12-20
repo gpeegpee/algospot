@@ -1,30 +1,18 @@
 #include <stdio.h>
 
-/*
-[description]
-C(1≤C≤50)
-정사각형의 수 n (1≤n≤100)
-가로에 블럭이 하나의 그룹으로 되어야 한다
-print result % 10,000,000
-*/
-
 #define FOR(i,j) for(i=0; i<(j); ++i)
-#define MAX_BLOCKS (100)
+#define MAX_BOARD_SIZE (12)
 
-int polyomino_count[MAX_BLOCKS+1];
+#define NONE (0)
+#define EXIST (1)
 
-int polyomino_start_pos[MAX_BLOCKS+1];
-int polyomino_finish_pos[MAX_BLOCKS+1];
+int queen_col_position[MAX_BOARD_SIZE+1];
+int num_of_solution;
 
-void init_board(int size_of_block)
+void init_board()
 {
-	int i;
-	FOR(i, size_of_block)
-	{
-		polyomino_count[i+1] = 0;
-		polyomino_start_pos[i+1] = 0;
-		polyomino_finish_pos[i+1] = 0;
-	}
+	queen_col_position[1] = 1;
+	num_of_solution = 0;
 }
 
 int promising(int queen_index, int col)
@@ -42,10 +30,11 @@ int promising(int queen_index, int col)
 	return col;
 }
 
-int get_answer(const int size_of_block)
+int get_answer(const int index, const int size_of_queen)
 {
 	int j;
-	for(j = 1; j <= size_of_block; ++j)
+
+	for(j = 1; j <= size_of_queen; ++j)
 	{
 		if (promising(index, j) > 0)
 		{
@@ -80,8 +69,8 @@ int main()
 
 	FOR(i, test_case)
 	{
-		scanf("%d", &size_of_block);
-		init_board(size_of_block);
-		printf("%d\n", get_answer(size_of_block));
+		scanf("%d", &size_of_queen);
+		init_board();
+		printf("%d\n", get_answer(1, size_of_queen));
 	}
 }
