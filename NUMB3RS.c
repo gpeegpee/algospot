@@ -106,7 +106,7 @@ int main()
 		init();
 		FOR(j, T)
 		{
-			printf("%.8f ", floor(100000000*get_answer(Q[j], D))/100000000);
+			printf("%.8f ", floor(1000000000*get_answer(Q[j], D))/1000000000);
 		}
 		printf("\n");
 	}
