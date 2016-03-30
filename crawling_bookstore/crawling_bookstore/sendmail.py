@@ -1,7 +1,0 @@
-mailServer = smtplib.SMTP('smtp.gmail.com', 587)
-		mailServer.ehlo()
-		mailServer.starttls()
-		mailServer.ehlo()
-		mailServer.login(gmailUser, gmailPassword)
-		mailServer.sendmail(gmailUser, recipients, msg.as_string())
-		mailServer.close()
